@@ -1,29 +1,30 @@
 import { View, Dimensions } from 'react-native';
-import styles from './style'
 import { LineChart } from 'react-native-chart-kit';
 
 export default function HistoryGraphic(props) {
+    const validData = props.infoDataGraphic.filter(value => typeof value === 'number' && isFinite(value));
+
     return (
         <View>
             <LineChart 
                 data={{
                     datasets: [
                         {
-                            data: props.infoDtaGraphic
+                            data: validData.length > 0 ? validData : [0], // Garantir que sempre tenha pelo menos um dado válido
                         },
                     ],
                 }}  
                 width={Dimensions.get("window").width}
                 height={220}
-                yAxisLabel='$'
-                yAxisSuffix='k'
+                yAxisLabel="$"
+                yAxisSuffix="k"
                 withVerticalLines={false}
                 yLabelsOffset={1}
                 withVerticalLabels={false}
                 chartConfig={{
-                    backgroundColor: "#000",
+                    backgroundColor: "#000000",
                     backgroundGradientFrom: "#232323",
-                    backgroundGradientTo: "#f3f3ff",
+                    backgroundGradientTo: "#3F3F3F",
                     decimalPlaces: 0,
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -36,6 +37,5 @@ export default function HistoryGraphic(props) {
                 bezier
             />
         </View>
-
     )
 }

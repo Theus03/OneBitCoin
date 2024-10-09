@@ -52,10 +52,15 @@ export default function App() {
   const [coinsGraphicList, setCoinsGraphicList] = useState([0]);
   const [days, setDays] = useState(30);
   const [updateDate, setUpdateDate] = useState(true);
+  const [price, setPrice] = useState();
 
   function updateDay(number) {
     setDays(number);
     setUpdateDate(true);
+  }
+
+  function priceCotation() {
+    setPrice(coinsGraphicList.pop());
   }
 
   useEffect(() => {
@@ -67,6 +72,8 @@ export default function App() {
       setCoinsGraphicList(dataG);
     });
 
+    priceCotation();
+
     if (updateDate) {
       setUpdateDate(false);
     }
@@ -76,8 +83,8 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#f50d41" barStyle="light-content" />
-      <CurrentPrice/>
-      <HistoryGraphic infoDtaGraphic={coinsGraphicList}/>
+      <CurrentPrice lastCotation={price} />
+      <HistoryGraphic infoDataGraphic={coinsGraphicList}/>
       <QuationsList filterDay={updateDay} listTransactions={coinsList}/>
     </SafeAreaView>
   );
